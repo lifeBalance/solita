@@ -1,0 +1,8 @@
+departureDate.auto()
+returnDate.auto()
+departureStationId.string()
+departureStationName.string()
+returnStationId.string()
+returnStationName.string()
+distance.auto()
+duration.auto()
