@@ -1,4 +1,5 @@
 import React from 'react' // I import like that bc I prefer to "namespace" my hooks
+import Layout from '../components/Layout'
 
 // const journeys = [
 //   {
@@ -36,32 +37,34 @@ function JourneysPage() {
   }, [])
 
   return (
-    <div className='bg-yellow-600  min-h-screen flex'>
-      <div className='max-w-4xl text-white mx-auto'>
-        <h1 className='text-4xl text-center py-4'>Journeys</h1>
-        <ul className='space-y-4'>
-          {journeys && journeys.length > 0 && journeys.map(j => (
-            <li className='border rounded-lg p-3' key={j._id}>
-              <p>
-                <span className=''>Departure:</span> <span className='font-bold'>{j.departureStationName}</span>
-              </p>
+    <Layout>
+      <div className='bg-yellow-600'>
+        <div className='max-w-4xl text-white mx-auto'>
+          <h1 className='text-4xl text-center py-4'>Journeys</h1>
+          <ul className='space-y-4 px-4 my-4'>
+            {journeys && journeys.length > 0 && journeys.map(j => (
+              <li className='border rounded-lg p-3' key={j._id}>
+                <p>
+                  <span className=''>Departure:</span> <span className='font-bold'>{j.departureStationName}</span>
+                </p>
 
-              <p>
-                <span className=''>Return:</span> <span className='font-bold'>{j.returnStationName}</span>
-              </p>
+                <p>
+                  <span className=''>Return:</span> <span className='font-bold'>{j.returnStationName}</span>
+                </p>
 
-              <p>
-                <span className=''>Distance:</span> <span className='font-bold'>{j.distance}</span> meters
-              </p>
+                <p>
+                  <span className=''>Distance:</span> <span className='font-bold'>{j.distance}</span> meters
+                </p>
 
-              <p>
-                <span className=''>Duration:</span> <span className='font-bold'>{j.duration}</span> minutes
-              </p>
-            </li>
-          ))}
-        </ul>
+                <p>
+                  <span className=''>Duration:</span> <span className='font-bold'>{j.duration}</span> minutes
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 
