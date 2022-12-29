@@ -5,7 +5,7 @@ function Header() {
   const location = useLocation()
   const pathname = location.pathname
 
-  console.log(pathname)
+  // console.log(pathname)
   return (
     <header className='bg-yellow-500 flex justify-between items-center'>
       <NavLink to='/' className='flex p-2 items-center'>

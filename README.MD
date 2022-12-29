@@ -8,17 +8,17 @@ This is the pre-assignment for Solita Dev Academy Finland fall 2022.
 * Curl
 
 ## Start the thing
-Assuming your system has all the dependencies listed above, glone this repo: 
+Assuming your system has all the dependencies listed above, clone this repo: 
 ```
 git clone git@github.com:lifeBalance/solita.git
 ```
 
-Change to the repo's folder:
+Change into the folder you just cloned:
 ```
 cd solita
 ```
 
-The setup should be up and running:
+To get the setup be up and running execute the following command:
 ```
 make memories
 ```

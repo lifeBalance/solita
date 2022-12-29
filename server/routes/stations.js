@@ -6,6 +6,9 @@ const router = express.Router()
 router.get('/stations', getStations)
 
 async function getStations(req, res) {
+  const page = parseInt(req.query.page)
+  // console.log('requested page',page) // testing
+
   const result = await db
     .collection('stations')
     .find(
@@ -18,7 +21,8 @@ async function getStations(req, res) {
         },
       },
     )
-    .limit(100)
+    .skip(page === 1 ? 0 : (page - 1) * 50)
+    .limit(50)
     .toArray()
   // console.log(result) // testing
   res.status(200).json(result)
