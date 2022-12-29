@@ -1,12 +1,19 @@
 import React from 'react'
-// import reactLogo from './assets/react.svg'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+// pages
+import HomePage from './pages/HomePage'
 
 function App() {
   return (
-    <div className="text-4xl">
-      <h1>Hello world</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path='/'
+          element={<HomePage />}
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
