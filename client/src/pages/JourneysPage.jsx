@@ -28,7 +28,7 @@ function JourneysPage() {
         <h1 className='text-4xl text-center py-4'>Journeys</h1>
         <ul className='space-y-4'>
           {journeys && journeys.length > 0 && journeys.map(j => (
-            <li className='border rounded-lg p-3'>
+            <li className='border rounded-lg p-3' key={j._id}>
               <p>
                 <span className=''>Departure:</span> <span className='font-bold'>{j.departureStationName}</span>
               </p>

@@ -25,7 +25,7 @@ function StationsPage() {
         <h1 className='text-4xl text-center py-4'>Stations</h1>
         <ul className='space-y-4'>
           {stations && stations.length > 0 && stations.map(s => (
-            <li className='border rounded-lg p-3'>
+            <li className='border rounded-lg p-3' key={s._id}>
               <p>
                 <span className=''>Name:</span> <span className='font-bold'>{s.Name}</span>
               </p>
