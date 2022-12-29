@@ -1,24 +1,36 @@
-import React from 'react'
+import React from 'react' // I don't destructure bc I prefer to "namespace" my hooks
 
-const stations = [
-  {
-    Name: 'Station name',
-    Adress: 'Some Address',
-    Kaupunki: 'Some town'
-  },
-  {
-    Name: 'Another station name',
-    Adress: 'Some other Address',
-    Kaupunki: 'Some other town'
-  },
-  {
-    Name: 'yet another station name',
-    Adress: 'Some different Address',
-    Kaupunki: 'Another town'
-  }
-]
+// const stations = [
+//   {
+//     Name: 'Station name',
+//     Adress: 'Some Address',
+//     Kaupunki: 'Some town'
+//   },
+//   {
+//     Name: 'Another station name',
+//     Adress: 'Some other Address',
+//     Kaupunki: 'Some other town'
+//   },
+//   {
+//     Name: 'yet another station name',
+//     Adress: 'Some different Address',
+//     Kaupunki: 'Another town'
+//   }
+// ]
 
 function StationsPage() {
+  const [stations, setStations ] = React.useState([])
+
+  React.useEffect(() => {
+    async function requestStations() {
+      const response = await fetch('/api/stations')
+      const data = await response.json()
+      setStations(data)
+    }
+
+    requestStations()
+  }, [])
+
   return (
     <div className='bg-yellow-600  min-h-screen flex'>
       <div className='max-w-4xl text-white mx-auto'>

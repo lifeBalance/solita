@@ -1,27 +1,40 @@
-import React from 'react'
+import React from 'react' // I import like that bc I prefer to "namespace" my hooks
 
-const journeys = [
-  {
-    departureStationName: 'Some station',
-    returnStationName: 'some other station',
-    distance: 1203,
-    duration: 10
-  },
-  {
-    departureStationName: 'Another station',
-    returnStationName: 'home station',
-    distance: 2203,
-    duration: 22
-  },
-  {
-    departureStationName: 'yet another station',
-    returnStationName: 'and another one',
-    distance: 3203,
-    duration: 34
-  }
-]
+// const journeys = [
+//   {
+//     departureStationName: 'Some station',
+//     returnStationName: 'some other station',
+//     distance: 1203,
+//     duration: 10
+//   },
+//   {
+//     departureStationName: 'Another station',
+//     returnStationName: 'home station',
+//     distance: 2203,
+//     duration: 22
+//   },
+//   {
+//     departureStationName: 'yet another station',
+//     returnStationName: 'and another one',
+//     distance: 3203,
+//     duration: 34
+//   }
+// ]
+
 
 function JourneysPage() {
+  const [journeys, setJourneys ] = React.useState([])
+
+  React.useEffect(() => {
+    async function requestJourneys() {
+      const response = await fetch('/api/journeys')
+      const data = await response.json()
+      setJourneys(data)
+    }
+
+    requestJourneys()
+  }, [])
+
   return (
     <div className='bg-yellow-600  min-h-screen flex'>
       <div className='max-w-4xl text-white mx-auto'>
@@ -32,14 +45,17 @@ function JourneysPage() {
               <p>
                 <span className=''>Departure:</span> <span className='font-bold'>{j.departureStationName}</span>
               </p>
+
               <p>
                 <span className=''>Return:</span> <span className='font-bold'>{j.returnStationName}</span>
               </p>
-              <p>
-                <span className=''>Duration:</span> <span className='font-bold'>{j.duration}</span> minutes
-              </p>
+
               <p>
                 <span className=''>Distance:</span> <span className='font-bold'>{j.distance}</span> meters
+              </p>
+
+              <p>
+                <span className=''>Duration:</span> <span className='font-bold'>{j.duration}</span> minutes
               </p>
             </li>
           ))}
