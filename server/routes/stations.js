@@ -7,6 +7,7 @@ router.get('/stations', getStations)
 
 async function getStations(req, res) {
   const page = parseInt(req.query.page)
+  const stationsPerPage = 20
   // console.log('requested page',page) // testing
 
   const result = await db
@@ -21,8 +22,8 @@ async function getStations(req, res) {
         },
       },
     )
-    .skip(page === 1 ? 0 : (page - 1) * 50)
-    .limit(50)
+    .skip(page === 1 ? 0 : (page - 1) * stationsPerPage)
+    .limit(stationsPerPage)
     .toArray()
   // console.log(result) // testing
   res.status(200).json(result)

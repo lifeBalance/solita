@@ -10,7 +10,7 @@ function StationCard(props) {
         <span className=''>Address:</span> <span className='font-bold'>{station.Adress}</span>
       </p>
       <p>
-        <span className=''>Town:</span> <span className='font-bold'>{station.Kaupunki}</span>
+        <span className=''>Town:</span> <span className='font-bold'>{station.Kaupunki || '---'}</span>
       </p>
     </div>
   )
