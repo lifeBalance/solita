@@ -32,8 +32,8 @@ function JourneysPage() {
           // If the last station is visible and hasMore is true
           if (entries[0].isIntersecting && hasMore) {
             // console.log('You hit end of page', pageNumber) // testing
-            /* Here we'd increment our page number, which will trigger the 
-        callback in useEffect to make a new request for more stations. */
+            /* Increment the page number, which will trigger the callback
+              in useEffect to make a new request for more stations. */
             setPageNumber((curr) => curr + 1)
 
             observer.current.disconnect()
@@ -147,6 +147,7 @@ function JourneysPage() {
                   )
                 }
               })}
+              {isLoading && <Spinner />}
           </ul>
         </div>
       </div>
