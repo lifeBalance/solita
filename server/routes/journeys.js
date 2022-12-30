@@ -6,6 +6,9 @@ const router = express.Router()
 router.get('/journeys', getJourneys)
 
 async function getJourneys(req, res) {
+  const page = parseInt(req.query.page)
+  const journeysPerPage = 20
+
   const result = await db
     .collection('journeys')
     .find(
@@ -19,7 +22,8 @@ async function getJourneys(req, res) {
         },
       },
     )
-    .limit(100)
+    .skip(page === 1 ? 0 : (page - 1) * journeysPerPage)
+    .limit(journeysPerPage)
     .toArray()
   // console.log(result)   // testing
   res.status(200).json(result)
