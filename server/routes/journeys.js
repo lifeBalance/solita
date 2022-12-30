@@ -6,13 +6,23 @@ const router = express.Router()
 router.get('/journeys', getJourneys)
 
 async function getJourneys(req, res) {
-  const page = parseInt(req.query.page)
+  // const page = parseInt(req.query.page)
+  // const { minDuration, maxDuration } = {minDuration: '500', maxDuration: ''} // dummy values
+  const { page, minDuration, maxDuration } = req.query
   const journeysPerPage = 10
+  const query = {}
+  // Let's build the query property by property
+  if (maxDuration && minDuration)
+    query.duration = { $gt: + minDuration, $lt: +maxDuration }
+  else if (maxDuration && !minDuration)
+    query.duration = { $lt: +maxDuration }
+  else if (!maxDuration && minDuration)
+    query.duration = { $gt: +minDuration }
 
   const result = await db
     .collection('journeys')
     .find(
-      {},
+      { ...query },
       {
         projection: {
           departureStationName: 1,
@@ -22,7 +32,7 @@ async function getJourneys(req, res) {
         },
       },
     )
-    .skip(page === 1 ? 0 : (page - 1) * journeysPerPage)
+    .skip(+page === 1 ? 0 : (+page - 1) * journeysPerPage)
     .limit(journeysPerPage)
     .toArray()
   // console.log(result[0], 'end')   // testing (why does it log it twice 🤔)
