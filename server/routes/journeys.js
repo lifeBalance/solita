@@ -8,16 +8,34 @@ router.get('/journeys', getJourneys)
 async function getJourneys(req, res) {
   // const page = parseInt(req.query.page)
   // const { minDuration, maxDuration } = {minDuration: '500', maxDuration: ''} // dummy values
-  const { page, minDuration, maxDuration } = req.query
+  const {
+    page,
+    minDuration,
+    maxDuration,
+    minDistance,
+    maxDistance
+  } = req.query
+
   const journeysPerPage = 10
   const query = {}
-  // Let's build the query property by property
+  /* Let's build the query property by property...
+  ** 
+  ** Starting with the duration:
+  */
   if (maxDuration && minDuration)
     query.duration = { $gt: + minDuration, $lt: +maxDuration }
   else if (maxDuration && !minDuration)
     query.duration = { $lt: +maxDuration }
   else if (!maxDuration && minDuration)
     query.duration = { $gt: +minDuration }
+
+  // Then the distance
+  if (maxDistance && minDistance)
+    query.distance = { $gt: + minDistance, $lt: +maxDistance }
+  else if (maxDistance && !minDistance)
+    query.distance = { $lt: +maxDistance }
+  else if (!maxDistance && minDistance)
+    query.distance = { $gt: +minDistance }
 
   const result = await db
     .collection('journeys')

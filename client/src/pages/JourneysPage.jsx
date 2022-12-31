@@ -13,6 +13,11 @@ function JourneysPage() {
     min: minDuration,
     max: maxDuration,
   } = useMinMax()
+  const {
+    handleChange: handleChangeDistance,
+    min: minDistance,
+    max: maxDistance,
+  } = useMinMax()
 
   // for infinite pagination
   const [pageNumber, setPageNumber] = React.useState(1)
@@ -58,6 +63,8 @@ function JourneysPage() {
           new URLSearchParams({
             minDuration,
             maxDuration,
+            minDistance,
+            maxDistance
           }),
       )
       const data = await response.json()
@@ -83,6 +90,8 @@ function JourneysPage() {
         new URLSearchParams({
           minDuration,
           maxDuration,
+          minDistance,
+          maxDistance
         }),
     )
     const data = await response.json()
@@ -103,7 +112,15 @@ function JourneysPage() {
       <div className='bg-yellow-600'>
         <div className='max-w-4xl text-white mx-auto px-4'>
           <h1 className='text-4xl text-center py-4'>Journeys</h1>
-          <div className='max-w-xl flex flex-col justify-center border rounded p-3 mx-auto'>
+          <div className='max-w-xl flex flex-col space-y-2 justify-center border rounded p-3 mx-auto'>
+            <FilterMinMax
+              label='Dist. (m)'
+              type='number'
+              minVal={minDistance}
+              maxVal={maxDistance}
+              handleChange={handleChangeDistance}
+            />
+
             <FilterMinMax
               label='Dur. (min)'
               type='number'
