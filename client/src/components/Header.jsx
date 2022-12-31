@@ -7,7 +7,7 @@ function Header() {
 
   // console.log(pathname)
   return (
-    <header className='bg-yellow-500 flex justify-between items-center'>
+    <header className='bg-yellow-500 flex justify-between items-center border-b-2 border-black'>
       <NavLink to='/' className='flex p-2 items-center'>
         <img src={logo} className='inline w-12 drop-shadow-xl'/>
 
