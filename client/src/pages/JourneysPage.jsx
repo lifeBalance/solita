@@ -3,11 +3,14 @@ import Layout from '../components/Layout'
 import JourneyCard from '../components/JourneyCard'
 import Spinner from '../components/Spinner'
 import FilterMinMax from '../components/FilterMinMax'
+import SortBy from '../components/SortBy'
 import useMinMax from '../hooks/useMinMax'
+import useSortBy from '../hooks/useSortBy'
 
 function JourneysPage() {
   const [journeys, setJourneys] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(false)
+  const [isSorting, setIsSorting] = React.useState(false)
   const {
     handleChange: handleChangeDuration,
     min: minDuration,
@@ -18,6 +21,12 @@ function JourneysPage() {
     min: minDistance,
     max: maxDistance,
   } = useMinMax()
+  const {
+    sortByChangeHandler,
+    orderByChangeHandler,
+    sortBy,
+    orderBy
+  } = useSortBy()
 
   // for infinite pagination
   const [pageNumber, setPageNumber] = React.useState(1)
@@ -64,7 +73,9 @@ function JourneysPage() {
             minDuration,
             maxDuration,
             minDistance,
-            maxDistance
+            maxDistance,
+            sortBy,
+            orderBy
           }),
       )
       const data = await response.json()
@@ -73,14 +84,39 @@ function JourneysPage() {
       // If data is an empty array, hasMore is set to false
       setHasMore(data.length > 0)
 
-      // setJourneys(prev => [...new Set([...prev, ...data])])
-      setJourneys((prev) => [...prev, ...data])
+      const sorted = sortJourneys([...journeys, ...data])
+      setJourneys(sorted)
+      // setJourneys((prev) => [...prev, ...data])
 
       setIsLoading(false)
     }
 
     requestJourneys()
   }, [pageNumber])
+
+  function sortJourneys(journeys) {
+    if (sortBy === 'departureStationName' || sortBy === 'returnStationName') {
+      const sorted = [...journeys].sort((a, b) => a[sortBy].toLowerCase().localeCompare(b[sortBy].toLowerCase()))
+
+      return orderBy == 1 ? sorted : sorted.reverse()
+    } else {
+      if (orderBy == 1) {
+        // console.log(`sorting by ${sortBy}, in ${orderBy} order`) // testing
+        const sorted = [...journeys].sort((a, b) => a[sortBy] > b[sortBy] ? 1 : -1)
+        return sorted
+      }
+      else if (orderBy == -1) {
+        // console.log(`sorting by ${sortBy}, in ${orderBy} order`) // testing
+        const sorted = [...journeys].sort((a, b) => a[sortBy] < b[sortBy] ? 1 : -1)
+        return sorted
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    const sorted = sortJourneys(journeys)
+    setJourneys(sorted)
+  }, [sortBy, orderBy])
 
   async function filterJourneys() {
     // console.log(`minDuration ${minDuration}, maxDuration ${maxDuration}`)  // testing
@@ -91,7 +127,9 @@ function JourneysPage() {
           minDuration,
           maxDuration,
           minDistance,
-          maxDistance
+          maxDistance,
+          sortBy,
+          orderBy
         }),
     )
     const data = await response.json()
@@ -100,8 +138,9 @@ function JourneysPage() {
     // If data is an empty array, hasMore is set to false
     setHasMore(data.length > 0)
 
-    // setJourneys(prev => [...new Set([...prev, ...data])])
-    setJourneys(data)
+    // setJourneys(data)
+    const sorted = sortJourneys(data)
+    setJourneys(sorted)
 
     setIsLoading(false)
   }
@@ -112,7 +151,7 @@ function JourneysPage() {
       <div className='bg-yellow-600'>
         <div className='max-w-4xl text-white mx-auto px-4'>
           <h1 className='text-4xl text-center py-4'>Journeys</h1>
-          <div className='max-w-xl flex flex-col space-y-2 justify-center border rounded p-3 mx-auto'>
+          <div className='max-w-xl flex flex-col space-y-4 justify-center border rounded p-3 mx-auto'>
             <FilterMinMax
               label='Dist. (m)'
               type='number'
@@ -134,9 +173,19 @@ function JourneysPage() {
             >
               Apply Filters
             </button>
+
+            <hr className='mt-3 pb-2' />
+
+            <SortBy
+              sort={sortBy}
+              order={orderBy}
+              handleSortByChange={sortByChangeHandler}
+              handleOrderByChange={orderByChangeHandler}
+            />
           </div>
           <ul className='space-y-4 my-4'>
-            {journeys &&
+            {isSorting && 'Sorting...'}
+            {!isSorting && journeys &&
               journeys.length > 0 &&
               journeys.map((journey, idx) => {
                 /**
@@ -164,7 +213,7 @@ function JourneysPage() {
                   )
                 }
               })}
-              {isLoading && <Spinner />}
+            {isLoading && <Spinner />}
           </ul>
         </div>
       </div>

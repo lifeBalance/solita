@@ -13,11 +13,15 @@ async function getJourneys(req, res) {
     minDuration,
     maxDuration,
     minDistance,
-    maxDistance
+    maxDistance,
+    sortBy,
+    orderBy
   } = req.query
 
+  console.log(sortBy, orderBy)
   const journeysPerPage = 10
   const query = {}
+  const sortParams = {}
   /* Let's build the query property by property...
   ** 
   ** Starting with the duration:
@@ -36,6 +40,15 @@ async function getJourneys(req, res) {
     query.distance = { $lt: +maxDistance }
   else if (!maxDistance && minDistance)
     query.distance = { $gt: +minDistance }
+  
+  if (sortBy === 'departureStationName')
+    sortParams.departureStationName = +orderBy
+  else if (sortBy === 'returnStationName')
+    sortParams.returnStationName = +orderBy
+  else if (sortBy === 'distance')
+    sortParams.distance = +orderBy
+  else if (sortBy === 'duration')
+    sortParams.duration = +orderBy
 
   const result = await db
     .collection('journeys')
@@ -52,6 +65,7 @@ async function getJourneys(req, res) {
     )
     .skip(+page === 1 ? 0 : (+page - 1) * journeysPerPage)
     .limit(journeysPerPage)
+    .sort(sortParams)
     .toArray()
   // console.log(result[0], 'end')   // testing (why does it log it twice 🤔)
   res.status(200).json(result)
