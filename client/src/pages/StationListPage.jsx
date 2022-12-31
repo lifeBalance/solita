@@ -6,7 +6,7 @@ import { Collapse } from 'react-collapse'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
-function StationsPage() {
+function StationListPage() {
   const [stations, setStations] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(false)
   const [pageNumber, setPageNumber] = React.useState(1)
@@ -55,7 +55,7 @@ function StationsPage() {
   }
 
   async function requestStations() {
-    console.log(`request for page ${pageNumber}`)
+    // console.log(`request for page ${pageNumber}`)
     setIsLoading(true)
     const response = await fetch(
       '/api/stations?' +
@@ -73,7 +73,6 @@ function StationsPage() {
     // pushing new stations into the state array
     setStations((prev) => [...new Set([...prev, ...data])])
     setIsLoading(false)
-    return data
   }
 
   async function requestSearchedStations() {
@@ -190,4 +189,4 @@ function StationsPage() {
   )
 }
 
-export default StationsPage
+export default StationListPage

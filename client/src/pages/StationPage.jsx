@@ -7,16 +7,19 @@ function StationPage() {
   const [station, setStation] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(false)
   const { id } = useParams()
-  console.log(id)
 
   React.useEffect(() => {
     async function getStation() {
       setIsLoading(true)
-      const response = await fetch(`/api/stations/${id}`)
-      const data = await response.json()
-
-      setStation(data)
-      console.log(data);
+      try {
+        const response = await fetch(`/api/stations/${id}`)
+        const data = await response.json()
+  
+        setStation(data)
+        // console.log(data) // testing
+      } catch (error) {
+        console.log(error)
+      }
       setIsLoading(false)
     }
 
@@ -32,7 +35,7 @@ function StationPage() {
   if (!isLoading && !station)
     return (
       <Layout>
-        <p>Woops, such station doesn't exist</p>
+        <p className='text-4xl p-20'>Woops, such station doesn't exist</p>
       </Layout>)
 
     return (

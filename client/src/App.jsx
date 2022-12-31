@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 // pages
 import HomePage from './pages/HomePage'
-import StationsPage from './pages/StationsPage'
+import StationListPage from './pages/StationListPage'
 import StationPage from './pages/StationPage'
 import JourneysPage from './pages/JourneysPage'
 
@@ -23,7 +23,7 @@ function App() {
 
         <Route
           path='/stations'
-          element={<StationsPage />}
+          element={<StationListPage />}
         />
 
         <Route
