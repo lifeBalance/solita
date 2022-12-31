@@ -4,6 +4,7 @@ import StationCard from '../components/StationCard'
 import Spinner from '../components/Spinner'
 import { Collapse } from 'react-collapse'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom'
 
 function StationsPage() {
   const [stations, setStations] = React.useState([])
@@ -166,13 +167,17 @@ function StationsPage() {
                       key={`${station._id}`}
                       ref={lastStation}
                     >
-                      <StationCard station={station} />
+                      <Link to={station._id}>
+                        <StationCard station={station} />
+                      </Link>
                     </li>
                   )
                 } else {
                   return (
                     <li key={`${station._id}`}>
-                      <StationCard station={station} />
+                      <Link to={station._id}>
+                        <StationCard station={station} />
+                      </Link>
                     </li>
                   )
                 }
