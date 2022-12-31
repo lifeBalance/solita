@@ -2,15 +2,19 @@ import React from 'react' // I import like that bc I prefer to "namespace" my ho
 import Layout from '../components/Layout'
 import JourneyCard from '../components/JourneyCard'
 import Spinner from '../components/Spinner'
+import { Collapse } from 'react-collapse'
 import FilterMinMax from '../components/FilterMinMax'
 import SortBy from '../components/SortBy'
 import useMinMax from '../hooks/useMinMax'
 import useSortBy from '../hooks/useSortBy'
+import { ChevronDownIcon,ChevronUpIcon } from '@heroicons/react/24/outline'
 
 function JourneysPage() {
   const [journeys, setJourneys] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(false)
   const [isSorting, setIsSorting] = React.useState(false)
+  const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = React.useState(false)
+
   const {
     handleChange: handleChangeDuration,
     min: minDuration,
@@ -151,37 +155,50 @@ function JourneysPage() {
       <div className='bg-yellow-600'>
         <div className='max-w-4xl text-white mx-auto px-4'>
           <h1 className='text-4xl text-center py-4'>Journeys</h1>
-          <div className='max-w-xl flex flex-col space-y-4 justify-center border rounded p-3 mx-auto'>
-            <FilterMinMax
-              label='Dist. (m)'
-              type='number'
-              minVal={minDistance}
-              maxVal={maxDistance}
-              handleChange={handleChangeDistance}
-            />
+          <div className='max-w-xl flex flex-col border rounded p-3 mx-auto'>
+            <div className='flex justify-between' onClick={() => setIsOpenAdvancedSearch(prev => !prev)}>
+              <p className='text-2xl'>Advanced search</p>
+              {isOpenAdvancedSearch ?
+              <ChevronUpIcon className='inline w-6 text-white'/> 
+              :
+              <ChevronDownIcon className='inline w-6 text-white'/>}
+            </div>
 
-            <FilterMinMax
-              label='Dur. (min)'
-              type='number'
-              minVal={minDuration}
-              maxVal={maxDuration}
-              handleChange={handleChangeDuration}
-            />
-            <button
-              onClick={filterJourneys}
-              className='w-full md:w-[50%] mx-auto border rounded-sm py-2 mt-3 hover:bg-white hover:bg-opacity-20'
-            >
-              Apply Filters
-            </button>
+            <Collapse isOpened={isOpenAdvancedSearch}>
+              <div className='flex flex-col space-y-6'>
+              <hr className='my-2'/>
+              <FilterMinMax
+                label='Dist. (m)'
+                type='number'
+                minVal={minDistance}
+                maxVal={maxDistance}
+                handleChange={handleChangeDistance}
+              />
 
-            <hr className='mt-3 pb-2' />
+              <FilterMinMax
+                label='Dur. (min)'
+                type='number'
+                minVal={minDuration}
+                maxVal={maxDuration}
+                handleChange={handleChangeDuration}
+              />
+              <button
+                onClick={filterJourneys}
+                className='w-full md:w-[50%] mx-auto border rounded-sm py-2 mt-3 hover:bg-white hover:bg-opacity-20'
+              >
+                Apply Filters
+              </button>
 
-            <SortBy
-              sort={sortBy}
-              order={orderBy}
-              handleSortByChange={sortByChangeHandler}
-              handleOrderByChange={orderByChangeHandler}
-            />
+              <hr className='mt-3' />
+
+              <SortBy
+                sort={sortBy}
+                order={orderBy}
+                handleSortByChange={sortByChangeHandler}
+                handleOrderByChange={orderByChangeHandler}
+              />
+              </div>
+            </Collapse>
           </div>
           <ul className='space-y-4 my-4'>
             {isSorting && 'Sorting...'}
