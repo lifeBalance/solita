@@ -5,14 +5,8 @@ import stationsRoutes from './routes/stations.js'
 
 const app = express()
 
-// For testing initial db connection
-app.get('/', async (req, res) => {
-  const result = await db.collection('stations').findOne({ Nimi: 'Hanasaari'})
-  
-  console.log(`hitting mongo with ${JSON.stringify(result)}`)
-  
-  res.send(`hello from ${result.Namn}`)
-})
+// Serve the React bundled app
+app.use(express.static('dist'))
 
 app.use('/api', journeysRoutes)
 app.use('/api', stationsRoutes)
