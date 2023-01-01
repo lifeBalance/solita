@@ -38,7 +38,7 @@ async function getStationList(req, res) {
 async function getStation(req, res) {
   const { id } = req.params
 
-  console.log('searching for station', id, ` (${typeof id})`) // testing
+  // console.log('searching for station', id, ` (${typeof id})`) // testing
 
   const stationIntel = await db
     .collection('stations')
@@ -68,7 +68,8 @@ async function getStation(req, res) {
         returnStationName: stationIntel.Name
       }
     )
-  console.log(stationIntel) // testing
+
+  // console.log(stationIntel) // testing
   res.status(200).json(stationIntel)
 }
 

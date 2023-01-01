@@ -23,6 +23,8 @@ To get the setup be up and running execute the following command:
 make memories
 ```
 
+> Please, be patient, it takes some time to seed the database 🙂
+
 ## Contents
 * Check the [assignment](./README/assignment.md) here.
 * Check my [notes](./README/my-notes.md) here.

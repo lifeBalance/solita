@@ -28,3 +28,6 @@ Here is where I spent most of the time, facing several small issues:
 * The datasets were mounted as volumes so they were accessible once the containers were launched.
 
 * Importing them into the database required a bit of Unix ingenuity to get rid of the CSV header (with ``tail``) and filter short journeys (with ``awk``). I had to use ``mongoimport``, because when I tried with a script, the setup seemed to choke with the amount of data that was written (crashed after successfully saving about half a million documents). I was using streams and mongoose schemas for validation. Not sure if it was the runtime (after all Node.js is almost a browser) or my script. Luckily for such datasets, a native tool like ``mongoimport`` was relatively fast, and learned a few interesting flags (creating my own header in a separate file, adding types to validate data, etc)
+
+## Caveats
+The single station page feels a bit laggy. It may be because I'm making three DB queries for the same request? To be honest, this was my 1st project using MongoDB, so I'd be grateful with the proper and faster way of accomplishing the result.
