@@ -12,7 +12,6 @@ import { ChevronDownIcon,ChevronUpIcon } from '@heroicons/react/24/outline'
 function JourneysPage() {
   const [journeys, setJourneys] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(false)
-  const [isSorting, setIsSorting] = React.useState(false)
   const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = React.useState(false)
 
   const {
@@ -201,8 +200,7 @@ function JourneysPage() {
             </Collapse>
           </div>
           <ul className='space-y-4 my-4'>
-            {isSorting && 'Sorting...'}
-            {!isSorting && journeys &&
+            {journeys &&
               journeys.length > 0 &&
               journeys.map((journey, idx) => {
                 /**

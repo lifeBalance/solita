@@ -20,7 +20,7 @@ function Header() {
             <NavLink to='/journeys'>Journeys</NavLink>
           </li>}
 
-          {pathname === '/journeys' &&<li className='drop-shadow-xl hover:underline hover:underline-offset-4 hover:scale-110'>
+          {(pathname === '/journeys' || pathname.startsWith('/stations/')) && <li className='drop-shadow-xl hover:underline hover:underline-offset-4 hover:scale-110'>
             <NavLink to='/stations'>Stations</NavLink>
           </li>}
         </ul>

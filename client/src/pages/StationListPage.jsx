@@ -156,14 +156,14 @@ function StationListPage() {
           </div>
 
           <ul className='space-y-4 my-4'>
-            {!isLoading && stations && stations.length === 0 && <p>No Matching Stations</p>}
-            {!isLoading && stations &&
+            {stations && stations.length === 0 && <p>No Matching Stations</p>}
+            {stations &&
               stations.length > 0 &&
               stations.map((station, idx) => {
                 if (stations.length === idx + 1) {
                   return (
                     <li
-                      key={`${station._id}`}
+                      key={`${station._id}${idx}`}
                       ref={lastStation}
                     >
                       <Link to={station._id}>
@@ -173,7 +173,7 @@ function StationListPage() {
                   )
                 } else {
                   return (
-                    <li key={`${station._id}`}>
+                    <li key={`${station._id}${idx}`}>
                       <Link to={station._id}>
                         <StationCard station={station} />
                       </Link>

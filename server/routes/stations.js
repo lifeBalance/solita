@@ -9,7 +9,7 @@ router.get('/stations', getStationList)
 
 async function getStationList(req, res) {
   const { page, search } = req.query
-  const stationsPerPage = 20
+  const stationsPerPage = 10
   const query = {}
   if (search)
     query.Name = { $regex: new RegExp(search.toLowerCase()) }
