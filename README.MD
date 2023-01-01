@@ -23,7 +23,9 @@ To get the setup be up and running execute the following command:
 make memories
 ```
 
-> Please, be patient, it takes some time to seed the database 🙂
+> Please, be patient, it takes some time to seed the database 🙂.
+
+Point your browser to http://localhost:5000/ where the app should be available.
 
 ## Contents
 * Check the [assignment](./README/assignment.md) here.
